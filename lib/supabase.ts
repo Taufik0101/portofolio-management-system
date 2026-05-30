@@ -16,6 +16,10 @@ export async function uploadImage(file: File): Promise<string> {
     throw new Error("Supabase configuration is missing");
   }
 
+  if (!supabase) {
+    throw new Error("Supabase client is not initialized");
+  }
+
   const fileExt = file.name.split(".").pop() || "jpg";
   const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
   const filePath = `portfolio-images/${fileName}`;
