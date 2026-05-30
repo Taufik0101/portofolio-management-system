@@ -1,16 +1,19 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import {createBrowserClient} from "@supabase/ssr";
-
+import { createBrowserClient } from "@supabase/ssr";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn("Supabase configuration is missing");
+export function createSupabaseBrowserClient() {
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn("Supabase configuration is missing. NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY must be set.");
+    return null;
+  }
+
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
 
-export const supabase: SupabaseClient | null = supabaseUrl && supabaseAnonKey 
-  ? createBrowserClient(supabaseUrl, supabaseAnonKey)
-  : null;
+export const supabase: SupabaseClient | null = createSupabaseBrowserClient();
 
 export async function uploadImage(file: File): Promise<string> {
   if (!supabaseUrl || !supabaseAnonKey) {
