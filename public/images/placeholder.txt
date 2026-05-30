@@ -1,0 +1,2 @@
+Add your portfolio images to this directory
+Image URLs should reference /images/your-image.jpg
