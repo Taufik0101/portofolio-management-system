@@ -28,7 +28,13 @@ const pool = new Pool(config);
 export async function query(text: string, params?: any[]): Promise<QueryResult<any>> {
   if (!DATABASE_URL) {
     // Return empty array for mock data mode
-    return { rows: [], rowCount: 0 } as QueryResult<any>;
+    return {
+      rows: [],
+      rowCount: 0,
+      command: "",
+      oid: 0,
+      fields: [],
+    } as QueryResult<any>;
   }
   
   const start = Date.now();
